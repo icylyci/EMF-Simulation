@@ -34,13 +34,13 @@ Since a field has both strength and direction, it's calculated in vector form �
 
 ### Field Lines, Dipoles, and Quadrupoles
 
-Field lines follow the direction of the field generated around charges — pointing away from positive charges and toward negative ones (if present) so their curvature visually represents field direction.
+Field lines follow the direction of the field generated around charges pointing away from positive charges and toward negative ones (if present) so their curvature visually represents field direction.
 
 Dipole and quadrupole presets are included (more planned). A dipole is a positive and negative charge placed near each other; a quadrupole is four charges arranged to create more complex patterns than a simple dipole. Charges from a preset can still be dragged afterward, so you can see how the fields change as positions shift.
 
 ## Design Choices
 
-Making the simulation interactive rather than a fixed diagram was the main goal — moving a charge and seeing the field update live makes the equations feel less abstract.
+Making the simulation interactive rather than a fixed diagram was the main goal moving a charge and seeing the field update live makes the equations feel less abstract.
 
 The field is calculated using vector components rather than magnitude alone, since magnitude can't explain direction or how multiple fields combine.
 
@@ -48,19 +48,19 @@ Both a vector grid and continuous field lines are drawn, since they show differe
 
 Arrow length and color use logarithmic scaling rather than linear, since field strength varies a lot from point to point — a direct linear scale washed out either the strong or weak regions. The log scale (clamped to a fixed range) keeps both visible: blue is weak, red is strong.
 
-The simulation uses the real value of Coulomb's constant (K = 8.99 × 10⁹), even though screen coordinates are in pixels rather than physical units like meters. This means it's a qualitative visualization rather than a dimensionally accurate physical model — the constant was kept as-is to stay connected to the real electrostatic formula.
+The simulation uses the real value of Coulomb's constant (K = 8.99 × 10⁹), even though screen coordinates are in pixels rather than physical units like meters. This means it's a qualitative visualization rather than a dimensionally accurate physical model the constant was kept as-is to stay connected to the real electrostatic formula.
 
 ## Libraries Used
 
-- **Pygame** — window, input handling, and all rendering (charges, arrows, field lines, UI)
-- **NumPy** — numerical side of field calculations: square roots, clamping, logarithmic scaling for arrow length and color
-- **math** — distance calculations (`math.hypot`) and angles for placing field-line start points or preset charges (`math.cos`, `math.sin`, `math.pi`)
+- **Pygame**
+- **NumPy**
+- **math**
 
 ## Key Functions
 
-- **`calculate_field(x, y, q, point_x, point_y)`** — core physics function. Given a charge's position and value plus a target point, returns the x and y components of the field that charge produces there, using Coulomb's law. Called once per charge for every displayed point, then summed for the total field (superposition).
-- **`trace_field_line(start_x, start_y, charges, step_size, max_steps)`** — starts at a point and repeatedly steps in the direction of the local field, recalculating at each new position. Stops early if it hits another charge, leaves the screen, or the field gets too weak. Returns the full path, drawn as a curved line with arrowheads at the midpoint.
-- **`create_dipole()`** / **`create_quadrupole()`** — build the preset charge arrangements and add them to the charge list.
+- **`calculate_field(x, y, q, point_x, point_y)`** core physics function. Given a charge's position and value plus a target point, returns the x and y components of the field that charge produces there, using Coulomb's law. Called once per charge for every displayed point, then summed for the total field (superposition).
+- **`trace_field_line(start_x, start_y, charges, step_size, max_steps)`** starts at a point and repeatedly steps in the direction of the local field, recalculating at each new position. Stops early if it hits another charge, leaves the screen, or the field gets too weak. Returns the full path, drawn as a curved line with arrowheads at the midpoint.
+- **`create_dipole()`** / **`create_quadrupole()`** build the preset charge arrangements and add them to the charge list.
 
 ## Possible Improvements
 
